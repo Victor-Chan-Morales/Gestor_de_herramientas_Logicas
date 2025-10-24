@@ -1,0 +1,81 @@
+/* Estilos para la aplicación de mapas */
+.app-container {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 300px;
+    padding: 20px;
+    background: #1f2937;
+    color: #f0f0f0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    color: #bfc7d6;
+    margin-bottom: 1.5rem;
+}
+
+.info-panel {
+    background: #111827;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.location-info h3 {
+    font-size: 0.9rem;
+    margin: 10px 0 5px;
+    color: #e2e8f0;
+}
+
+.location-info p {
+    font-size: 0.85rem;
+    margin: 0 0 15px;
+    color: #94a3b8;
+}
+
+.results-panel {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #374151;
+}
+
+.results-panel h3 {
+    font-size: 0.9rem;
+    margin: 0 0 10px;
+    color: #e2e8f0;
+}
+
+#map {
+    flex: 1;
+    height: 100%;
+}
+
+/* Estilos para los marcadores personalizados */
+.marker-origin {
+    background-color: #22c55e;
+    border: 2px solid #ffffff;
+}
+
+.marker-destination {
+    background-color: #ef4444;
+    border: 2px solid #ffffff;
+}
+
+.marker {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}

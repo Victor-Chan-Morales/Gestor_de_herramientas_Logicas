@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplificador de Expresiones Booleanas</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Calculadora de Expresiones Booleanas</h1>
+      </header>
+
+      <section class="menu">
+        <button id="btn-enter">Ingresar expresión</button>
+        <button id="btn-final">Mostrar resultado final</button>
+      </section>
+
+      <section class="input">
+        <label for="expression">Expresión booleana (por ejemplo: A*B + A*!B):</label>
+        <input id="expression" type="text" placeholder="A*B + A*!B" value="A*B + A*!B" autocomplete="off" />
+        <small class="hint">Operadores: + (OR), * (AND), ! (NOT), paréntesis ()</small>
+      </section>
+
+      <section class="steps">
+        <h2>Pasos de simplificación</h2>
+        <div id="steps"></div>
+      </section>
+
+      <section class="result">
+        <h2>Resultado final</h2>
+        <div id="errors" class="errors" aria-live="polite"></div>
+        <div id="result"></div>
+      </section>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+  </html>
+
+

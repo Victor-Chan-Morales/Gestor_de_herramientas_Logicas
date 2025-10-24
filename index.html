@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suite de Herramientas Lógicas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Suite de Herramientas Lógicas</h1>
+      <p>Una colección interactiva de aplicaciones para lógica, regex, mapas y más en versión beta</p>
+    </header>
+
+    <section class="cards">
+      <div class="card" onclick="navigate('boleana')">
+        <h2>🧮 Reducción Booleana</h2>
+        <p>Calculadora visual para simplificar expresiones lógicas</p>
+      </div>
+      <div class="card" onclick="navigate('regex')">
+        <h2>🔤 Validador Regex</h2>
+        <p>Aplicación móvil para validar y aplicar expresiones regulares</p>
+      </div>
+      <div class="card" onclick="navigate('tablas')">
+        <h2>🎮 Juego de Tablas de Verdad</h2>
+        <p>Juego educativo para practicar lógica proposicional</p>
+      </div>
+      <div class="card" onclick="navigate('mapa')">
+        <h2>🗺️ Ruta más corta (OSM)</h2>
+        <p>Explorador urbano con cálculo de rutas usando Dijkstra</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 · Desarrollado por Victor · Todos los derechos reservados</p>
+    </footer>
+  </div>
+
+  <script>
+    function navigate(project) {
+      if (project === 'boleana') {
+        window.location.href = 'Reduccion-Booleana-main/index.html';
+      } else {
+        window.location.href = `${project}.html`;
+      }
+    }
+  </script>
+</body>
+</html>
