@@ -12,8 +12,8 @@ class MapManager {
     }
 
     initMap() {
-        // Inicializar el mapa centrado en Monterrey
-        this.map = L.map('map').setView([25.6866, -100.3161], 13);
+        // Inicializar el mapa centrado en Quetzaltenango, Guatemala
+        this.map = L.map('map').setView([14.8333, -91.5167], 13);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'

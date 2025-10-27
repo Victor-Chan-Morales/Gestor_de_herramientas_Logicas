@@ -10,20 +10,27 @@
 <body>
     <div class="app-container">
         <div class="sidebar">
-            <h1>Explorador de rutas</h1>
-            <p class="subtitle">Click: seleccionar punto | Doble click: limpiar selección</p>
+            <a href="/" class="back-button">
+                <span>←</span>
+                <span>Volver al menú</span>
+            </a>
+            
+            <div class="header-section">
+                <h1>Explorador de rutas</h1>
+                <p class="subtitle">Click: seleccionar punto | Doble click: limpiar selección</p>
+            </div>
             
             <div class="info-panel">
                 <div class="location-info">
-                    <h3>Origen (verde):</h3>
+                    <h3>Origen</h3>
                     <p id="origin-coords">No seleccionado</p>
                     
-                    <h3>Destino (rojo):</h3>
+                    <h3>Destino</h3>
                     <p id="dest-coords">No seleccionado</p>
                 </div>
                 
                 <div class="results-panel">
-                    <h3>Resultados:</h3>
+                    <h3>Resultados</h3>
                     <div id="route-info">
                         <p>Selecciona un origen y un destino en el mapa</p>
                     </div>
@@ -35,8 +42,8 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/graph.js"></script>
-    <script src="js/map_manager.js"></script>
-    <script src="js/route_finder.js"></script>
+    <script src="js/graph.js?v=2"></script>
+    <script src="js/map_manager.js?v=2"></script>
+    <script src="js/route_finder.js?v=2"></script>
 </body>
 </html>
