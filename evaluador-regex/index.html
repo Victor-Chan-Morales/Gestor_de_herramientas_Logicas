@@ -126,6 +126,15 @@
     <span>Volver al Menú</span>
   </a>
 
+  <script>
+    // Configurar rutas para GitHub Pages antes de cargar Flutter
+    if (!window._flutter) {
+      window._flutter = {};
+    }
+    window._flutter.buildConfig = window._flutter.buildConfig || {};
+    window._flutter.buildConfig.assetBase = "/Gestor_de_herramientas_Logicas/evaluador-regex/";
+  </script>
+  
   <script src="flutter_bootstrap.js" async></script>
 
   <script>
