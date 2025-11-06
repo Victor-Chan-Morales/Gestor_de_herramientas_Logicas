@@ -16,9 +16,12 @@ Juego educativo interactivo para practicar lógica proposicional.
 ### Algoritmo de Dijkstra
 Visualizador de rutas óptimas sobre mapas geográficos reales.
 
+### Cadenas de Markov
+Simulador interactivo de autómatas probabilísticos con visualización de grafos y cálculo de distribuciones estacionarias.
+
 ## Tecnologías
 
-HTML5, CSS3, JavaScript, Flutter, Unity WebGL, OpenStreetMap, Leaflet.js
+HTML5, CSS3, JavaScript, Flutter, Unity WebGL, React, Vite, Tailwind CSS, OpenStreetMap, Leaflet.js, MathJax, vis-network
 
 ---
 

@@ -201,6 +201,15 @@ header h1 {
   color: #f472b6;
 }
 
+.card-markov {
+  color: #fbbf24;
+}
+
+.card-markov .card-icon {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+}
+
 footer {
   margin-top: 6rem;
   padding-top: 3rem;
