@@ -2,9 +2,144 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+:root {
+  --bg: #0f172a;
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  --fg: #e2e8f0;
+  --fg-muted: #cbd5e1;
+  --muted: #94a3b8;
+  --accent: #fbbf24;
+  --accent-hover: #f59e0b;
+  --card: rgba(30, 41, 59, 0.6);
+  --card-hover: rgba(30, 41, 59, 0.8);
+  --border: rgba(71, 85, 105, 0.3);
+  --border-hover: rgba(71, 85, 105, 0.5);
 }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+  background: var(--bg-gradient) !important;
+  color: var(--fg) !important;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
 .card {
-  @apply bg-white rounded-lg shadow-sm p-4;
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  padding: 1.5rem !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  color: var(--fg) !important;
+}
+
+.card:hover {
+  border-color: var(--border-hover) !important;
+}
+
+.card h3, .card h2 {
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+}
+
+input[type="text"], input[type="number"], textarea {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--fg) !important;
+  border-radius: 8px !important;
+  padding: 0.75rem !important;
+  transition: all 0.2s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+  outline: none !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1) !important;
+}
+
+button {
+  border-radius: 8px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+button.bg-indigo-600, button.bg-blue-600 {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  border: 2px solid var(--accent) !important;
+}
+
+button.bg-indigo-600:hover, button.bg-blue-600:hover {
+  background: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(251, 191, 36, 0.3) !important;
+}
+
+button.bg-gray-100, button.bg-gray-200 {
+  background: var(--card) !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--border) !important;
+}
+
+button.bg-gray-100:hover, button.bg-gray-200:hover {
+  background: var(--card-hover) !important;
+  border-color: var(--border-hover) !important;
+  transform: translateY(-2px);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th {
+  background: rgba(251, 191, 36, 0.15) !important;
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+  padding: 12px 16px !important;
+  border: 1px solid var(--border) !important;
+}
+
+table td {
+  color: var(--fg-muted) !important;
+  padding: 12px 16px !important;
+  border: 1px solid var(--border) !important;
+}
+
+table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+table tr:hover {
+  background: rgba(251, 191, 36, 0.05);
+}
+
+.text-slate-700 {
+  color: var(--fg) !important;
+}
+
+.text-slate-600 {
+  color: var(--muted) !important;
+}
+
+.bg-slate-50 {
+  background: transparent !important;
+}
+
+a {
+  color: var(--accent) !important;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-hover) !important;
 }
