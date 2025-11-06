@@ -111,7 +111,7 @@ export default function MapView({ states, P, packages = {} }) {
         const weight = Math.max(2, probability * 10)
         const opacity = Math.max(0.3, probability)
 
-        // Línea con flecha
+        // Línea con estilo según probabilidad
         const line = L.polyline([fromLoc.coords, toLoc.coords], {
           color: fromLoc.color,
           weight: weight,
@@ -119,37 +119,15 @@ export default function MapView({ states, P, packages = {} }) {
           dashArray: fromState === toState ? '10, 10' : null
         }).addTo(map)
 
-        // Agregar flecha al final
-        const decorator = L.polylineDecorator(line, {
-          patterns: [
-            {
-              offset: '50%',
-              repeat: 0,
-              symbol: L.Symbol.arrowHead({
-                pixelSize: 10,
-                polygon: false,
-                pathOptions: {
-                  stroke: true,
-                  color: fromLoc.color,
-                  weight: 2,
-                  opacity: opacity
-                }
-              })
-            }
-          ]
-        })
-
-        if (decorator && decorator.addTo) {
-          decorator.addTo(map)
-          linesRef.current.push(decorator)
-        }
-
         linesRef.current.push(line)
 
-        // Tooltip con probabilidad
+        // Tooltip con probabilidad y flecha visual
         line.bindTooltip(
-          `${fromState} → ${toState}<br><strong>${(probability * 100).toFixed(1)}%</strong>`,
-          { permanent: false, direction: 'center' }
+          `<div style="text-align: center;">
+            <strong>${fromState}</strong> → <strong>${toState}</strong><br>
+            <span style="font-size: 1.2rem; color: ${fromLoc.color};">${(probability * 100).toFixed(1)}%</span>
+          </div>`,
+          { permanent: false, direction: 'center', className: 'custom-tooltip' }
         )
       })
     })
