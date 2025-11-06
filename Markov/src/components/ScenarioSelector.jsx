@@ -1,9 +1,10 @@
 import React from 'react'
+import { BoxIcon, TreeIcon, AlertTriangleIcon, ZapIcon, ClockIcon, ChecklistIcon } from './icons'
 
 const SCENARIOS = {
   normal: {
     name: "Operación Normal",
-    icon: "📦",
+    Icon: BoxIcon,
     description: "Flujo estándar de paquetes con operación regular",
     P: [
       [0.1, 0.8, 0, 0, 0.1],
@@ -16,7 +17,7 @@ const SCENARIOS = {
   },
   highSeason: {
     name: "Temporada Alta",
-    icon: "🎄",
+    Icon: TreeIcon,
     description: "Navidad - Mayor congestión y tiempos de espera",
     P: [
       [0.15, 0.7, 0, 0.05, 0.1],
@@ -29,7 +30,7 @@ const SCENARIOS = {
   },
   crisis: {
     name: "Crisis Logística",
-    icon: "⚠️",
+    Icon: AlertTriangleIcon,
     description: "Problemas operativos severos",
     P: [
       [0.2, 0.6, 0, 0.1, 0.1],
@@ -42,7 +43,7 @@ const SCENARIOS = {
   },
   optimal: {
     name: "Operación Óptima",
-    icon: "⚡",
+    Icon: ZapIcon,
     description: "Máxima eficiencia operativa",
     P: [
       [0.05, 0.9, 0, 0, 0.05],
@@ -72,28 +73,30 @@ export default function ScenarioSelector({ currentP, setP, states }) {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-        {Object.entries(SCENARIOS).map(([key, scenario]) => (
-          <button
-            key={key}
-            onClick={() => loadScenario(key)}
-            className={`scenario-card ${selectedScenario === key ? 'selected' : ''}`}
-            style={{
-              background: selectedScenario === key 
-                ? 'rgba(251, 191, 36, 0.15)' 
-                : 'rgba(30, 41, 59, 0.6)',
-              border: selectedScenario === key
-                ? '2px solid rgba(251, 191, 36, 0.6)'
-                : '1px solid rgba(71, 85, 105, 0.3)',
-              borderRadius: '12px',
-              padding: '1rem',
-              textAlign: 'left',
-              transition: 'all 0.2s ease',
-              cursor: 'pointer'
-            }}
-          >
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-              {scenario.icon}
-            </div>
+        {Object.entries(SCENARIOS).map(([key, scenario]) => {
+          const IconComponent = scenario.Icon
+          return (
+            <button
+              key={key}
+              onClick={() => loadScenario(key)}
+              className={`scenario-card ${selectedScenario === key ? 'selected' : ''}`}
+              style={{
+                background: selectedScenario === key 
+                  ? 'rgba(6, 182, 212, 0.15)' 
+                  : 'rgba(30, 41, 59, 0.6)',
+                border: selectedScenario === key
+                  ? '2px solid rgba(6, 182, 212, 0.6)'
+                  : '1px solid rgba(71, 85, 105, 0.3)',
+                borderRadius: '12px',
+                padding: '1rem',
+                textAlign: 'left',
+                transition: 'all 0.2s ease',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'flex-start' }}>
+                <IconComponent size={40} color="var(--accent)" />
+              </div>
             <h4 style={{ 
               color: 'var(--accent)', 
               fontWeight: 700, 
@@ -117,12 +120,18 @@ export default function ScenarioSelector({ currentP, setP, states }) {
               flexDirection: 'column',
               gap: '0.2rem'
             }}>
-              <div>⏱️ {scenario.metrics.avgTime}</div>
-              <div>⚠️ Retrasos: {scenario.metrics.delayed}</div>
-              <div>✅ Entregados: {scenario.metrics.delivered}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <ClockIcon size={12} /> {scenario.metrics.avgTime}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <AlertTriangleIcon size={12} /> Retrasos: {scenario.metrics.delayed}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <ChecklistIcon size={12} /> Entregados: {scenario.metrics.delivered}
+              </div>
             </div>
           </button>
-        ))}
+        )})}
       </div>
 
       <div className="comparison-table" style={{
@@ -143,11 +152,17 @@ export default function ScenarioSelector({ currentP, setP, states }) {
           <thead>
             <tr>
               <th style={{ textAlign: 'left', padding: '0.5rem' }}>Métrica</th>
-              {Object.entries(SCENARIOS).map(([key, scenario]) => (
-                <th key={key} style={{ textAlign: 'center', padding: '0.5rem' }}>
-                  {scenario.icon} {scenario.name}
-                </th>
-              ))}
+              {Object.entries(SCENARIOS).map(([key, scenario]) => {
+                const IconComponent = scenario.Icon
+                return (
+                  <th key={key} style={{ textAlign: 'center', padding: '0.5rem' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <IconComponent size={16} color="var(--accent)" />
+                      {scenario.name}
+                    </div>
+                  </th>
+                )
+              })}
             </tr>
           </thead>
           <tbody>

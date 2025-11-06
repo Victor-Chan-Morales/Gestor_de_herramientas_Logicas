@@ -8,8 +8,9 @@
   --fg: #e2e8f0;
   --fg-muted: #cbd5e1;
   --muted: #94a3b8;
-  --accent: #fbbf24;
-  --accent-hover: #f59e0b;
+  --accent: #06b6d4;
+  --accent-hover: #0891b2;
+  --accent-rgb: 6, 182, 212;
   --card: rgba(30, 41, 59, 0.6);
   --card-hover: rgba(30, 41, 59, 0.8);
   --border: rgba(71, 85, 105, 0.3);
@@ -56,7 +57,7 @@ input[type="text"], input[type="number"], textarea {
 input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
   outline: none !important;
   border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1) !important;
 }
 
 button {
@@ -77,7 +78,7 @@ button.bg-indigo-600:hover, button.bg-blue-600:hover {
   background: var(--accent-hover) !important;
   border-color: var(--accent-hover) !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(251, 191, 36, 0.3) !important;
+  box-shadow: 0 8px 16px rgba(var(--accent-rgb), 0.3) !important;
 }
 
 button.bg-gray-100, button.bg-gray-200 {
@@ -98,7 +99,7 @@ table {
 }
 
 table th {
-  background: rgba(251, 191, 36, 0.15) !important;
+  background: rgba(var(--accent-rgb), 0.15) !important;
   color: var(--accent) !important;
   font-weight: 700 !important;
   text-transform: uppercase;
@@ -119,7 +120,7 @@ table tr:nth-child(even) {
 }
 
 table tr:hover {
-  background: rgba(251, 191, 36, 0.05);
+  background: rgba(var(--accent-rgb), 0.05);
 }
 
 .text-slate-700 {
@@ -156,12 +157,12 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(251, 191, 36, 0.5);
+  background: rgba(var(--accent-rgb), 0.5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(251, 191, 36, 0.7);
+  background: rgba(var(--accent-rgb), 0.7);
 }
 
 /* Leaflet overrides */
@@ -226,7 +227,7 @@ a:hover {
 /* Hover effects para las cards de escenario */
 .scenario-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(251, 191, 36, 0.2);
+  box-shadow: 0 12px 24px rgba(var(--accent-rgb), 0.2);
 }
 
 /* Grid responsive mejorado */

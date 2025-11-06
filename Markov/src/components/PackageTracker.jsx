@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { BoxIcon, TruckIcon, AlertTriangleIcon, ChecklistIcon } from './icons'
 
 const STATE_ICONS = {
-  'Almacén': '📦',
-  'Carga': '🚛',
-  'En tránsito': '🚚',
-  'Retrasado': '⚠️',
-  'Entregado': '✅'
+  'Almacén': BoxIcon,
+  'Carga': TruckIcon,
+  'En tránsito': TruckIcon,
+  'Retrasado': AlertTriangleIcon,
+  'Entregado': ChecklistIcon
 }
 
 function formatElapsedTime(milliseconds) {
@@ -25,7 +26,7 @@ function formatElapsedTime(milliseconds) {
 function PackageCard({ pkg, states }) {
   const [expanded, setExpanded] = useState(false)
   const elapsed = Date.now() - pkg.startTime
-  const currentStateIcon = STATE_ICONS[pkg.currentState] || '📦'
+  const CurrentStateIcon = STATE_ICONS[pkg.currentState] || BoxIcon
   
   // Estimar probabilidad de entrega en 24h (simplificado)
   const deliveryProbability = pkg.isDelivered ? 100 : 
@@ -59,7 +60,7 @@ function PackageCard({ pkg, states }) {
         onClick={() => setExpanded(!expanded)}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <span style={{ fontSize: '1.5rem' }}>{currentStateIcon}</span>
+          <CurrentStateIcon size={28} color={statusColor} />
           <div>
             <div style={{ fontWeight: 700, color: 'var(--fg)', fontSize: '0.95rem' }}>
               {pkg.id}
@@ -77,9 +78,24 @@ function PackageCard({ pkg, states }) {
             padding: '0.25rem 0.75rem',
             borderRadius: '16px',
             fontSize: '0.75rem',
-            fontWeight: 700
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
           }}>
-            {pkg.isDelivered ? '✅ Entregado' : '🔄 En proceso'}
+            {pkg.isDelivered ? (
+              <>
+                <ChecklistIcon size={14} color={statusColor} />
+                Entregado
+              </>
+            ) : (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={statusColor} strokeWidth="2">
+                  <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                </svg>
+                En proceso
+              </>
+            )}
           </div>
           <span style={{ color: 'var(--muted)', fontSize: '1rem' }}>
             {expanded ? '▼' : '▶'}
@@ -103,7 +119,7 @@ function PackageCard({ pkg, states }) {
             <div style={{ position: 'relative', paddingLeft: '2rem' }}>
               {pkg.history.map((entry, idx) => {
                 const isLast = idx === pkg.history.length - 1
-                const icon = STATE_ICONS[entry.state] || '📦'
+                const IconComponent = STATE_ICONS[entry.state] || BoxIcon
                 const time = new Date(entry.timestamp).toLocaleTimeString('es-ES', {
                   hour: '2-digit',
                   minute: '2-digit'
@@ -152,9 +168,13 @@ function PackageCard({ pkg, states }) {
                           fontSize: '0.9rem', 
                           fontWeight: isLast ? 700 : 600,
                           color: isLast ? 'var(--accent)' : 'var(--fg)',
-                          marginBottom: '0.25rem'
+                          marginBottom: '0.25rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
                         }}>
-                          {icon} {entry.state}
+                          <IconComponent size={16} color={isLast ? 'var(--accent)' : 'var(--fg-muted)'} />
+                          {entry.state}
                         </div>
                         {isLast && (
                           <div style={{ 
@@ -250,7 +270,9 @@ export default function PackageTracker({ packages, states }) {
           padding: '3rem 1rem',
           color: 'var(--muted)'
         }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📦</div>
+          <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
+            <BoxIcon size={80} color="var(--muted)" />
+          </div>
           <p>Inicia la simulación para ver el tracking de paquetes individuales</p>
         </div>
       </div>
@@ -275,10 +297,22 @@ export default function PackageTracker({ packages, states }) {
     )
   }
 
+  const filterOptions = [
+    { key: 'all', label: 'Todos', Icon: BoxIcon },
+    { key: 'active', label: 'Activos', Icon: () => (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+      </svg>
+    ) },
+    { key: 'delivered', label: 'Entregados', Icon: ChecklistIcon },
+    { key: 'delayed', label: 'Retrasados', Icon: AlertTriangleIcon }
+  ]
+
   return (
     <div className="card">
-      <h3 className="text-lg font-semibold mb-3">
-        📦 Tracking de Paquetes
+      <h3 className="text-lg font-semibold mb-3" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <BoxIcon size={24} color="var(--accent)" />
+        Tracking de Paquetes
       </h3>
 
       {/* Controles de filtrado */}
@@ -296,22 +330,21 @@ export default function PackageTracker({ packages, states }) {
         />
         
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {[
-            { key: 'all', label: 'Todos', icon: '📦' },
-            { key: 'active', label: 'Activos', icon: '🔄' },
-            { key: 'delivered', label: 'Entregados', icon: '✅' },
-            { key: 'delayed', label: 'Retrasados', icon: '⚠️' }
-          ].map(({ key, label, icon }) => (
+          {filterOptions.map(({ key, label, Icon }) => (
             <button
               key={key}
               onClick={() => setFilter(key)}
               className={filter === key ? 'bg-indigo-600' : 'bg-gray-200'}
               style={{
                 fontSize: '0.85rem',
-                padding: '0.5rem 1rem'
+                padding: '0.5rem 1rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
               }}
             >
-              {icon} {label}
+              <Icon size={16} />
+              {label}
             </button>
           ))}
         </div>

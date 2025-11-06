@@ -12,6 +12,7 @@ import {
   LineElement
 } from 'chart.js'
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
+import { ChartIcon, BoxIcon, ChecklistIcon, ClockIcon, ZapIcon } from './icons'
 
 // Registrar componentes de Chart.js
 ChartJS.register(
@@ -42,7 +43,7 @@ function MetricCard({ icon, label, value, trend, color = 'var(--accent)' }) {
       gap: '0.5rem'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <span style={{ fontSize: '1.5rem' }}>{icon}</span>
+        {icon}
         <span style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>{label}</span>
       </div>
       <div style={{ 
@@ -64,8 +65,7 @@ function MetricCard({ icon, label, value, trend, color = 'var(--accent)' }) {
 
 function TransitionHeatmap({ P, states }) {
   const getColor = (value) => {
-    const intensity = Math.floor(value * 255)
-    return `rgba(251, 191, 36, ${value})`
+    return `rgba(6, 182, 212, ${value})`
   }
 
   return (
@@ -379,30 +379,33 @@ export default function MetricsDashboard({ packages, states, P }) {
 
   return (
     <div className="card">
-      <h3 className="text-lg font-semibold mb-4">📊 Dashboard de Métricas</h3>
+      <h3 className="text-lg font-semibold mb-4" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <ChartIcon size={24} color="var(--accent)" />
+        Dashboard de Métricas
+      </h3>
 
       {/* KPIs principales */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
         <MetricCard
-          icon="📦"
+          icon={<BoxIcon size={24} color="#3b82f6" />}
           label="Total Paquetes"
           value={metrics.total}
           color="#3b82f6"
         />
         <MetricCard
-          icon="✅"
+          icon={<ChecklistIcon size={24} color="#10b981" />}
           label="Tasa de Entrega"
           value={`${metrics.deliveryRate.toFixed(1)}%`}
           color="#10b981"
         />
         <MetricCard
-          icon="⏱️"
+          icon={<ClockIcon size={24} color="#f59e0b" />}
           label="Tiempo Promedio"
           value={formatTime(metrics.avgTime)}
           color="#f59e0b"
         />
         <MetricCard
-          icon="📈"
+          icon={<ZapIcon size={24} color="#8b5cf6" />}
           label="Eficiencia"
           value={`${metrics.efficiency.toFixed(1)}%`}
           color="#8b5cf6"

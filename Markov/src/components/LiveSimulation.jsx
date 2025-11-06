@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { PlayIcon, BoxIcon } from './icons'
 
 function weightedRandom(probabilities) {
   const r = Math.random()
@@ -123,7 +124,10 @@ export default function LiveSimulation({ states, P, onPackagesUpdate, onAllPacka
 
   return (
     <div className="card">
-      <h3 className="text-lg font-semibold mb-3">🎮 Simulación en Tiempo Real</h3>
+      <h3 className="text-lg font-semibold mb-3" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <PlayIcon size={24} color="var(--accent)" />
+        Simulación en Tiempo Real
+      </h3>
       
       {/* Controles */}
       <div className="mb-4 p-4" style={{
@@ -168,24 +172,45 @@ export default function LiveSimulation({ states, P, onPackagesUpdate, onAllPacka
               <button
                 onClick={initializePackages}
                 className="bg-indigo-600"
-                style={{ flex: 1 }}
+                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
               >
-                ▶️ Crear Paquetes
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                Crear Paquetes
               </button>
             ) : (
               <>
                 <button
                   onClick={toggleSimulation}
                   className="bg-indigo-600"
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  {isRunning ? '⏸️ Pausar' : '▶️ Iniciar'}
+                  {isRunning ? (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                      </svg>
+                      Pausar
+                    </>
+                  ) : (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                      </svg>
+                      Iniciar
+                    </>
+                  )}
                 </button>
                 <button
                   onClick={resetSimulation}
                   className="bg-gray-200"
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
-                  🔄
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                  </svg>
                 </button>
               </>
             )}

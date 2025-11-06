@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react'
+import { createRoot } from 'react-dom/client'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { BoxIcon, TruckIcon, AlertTriangleIcon, ChecklistIcon } from './icons'
 
 // Fix para los iconos de Leaflet en producción
 delete L.Icon.Default.prototype._getIconUrl
@@ -11,11 +13,11 @@ L.Icon.Default.mergeOptions({
 })
 
 const LOCATIONS = {
-  'Almacén': { coords: [14.6349, -90.5069], color: '#3b82f6', icon: '📦' },
-  'Carga': { coords: [14.6407, -90.5131], color: '#8b5cf6', icon: '🚛' },
-  'En tránsito': { coords: [14.7833, -91.5167], color: '#f59e0b', icon: '🚚' },
-  'Retrasado': { coords: [14.5833, -90.5167], color: '#ef4444', icon: '⚠️' },
-  'Entregado': { coords: [14.8333, -91.5167], color: '#10b981', icon: '✅' }
+  'Almacén': { coords: [14.6349, -90.5069], color: '#3b82f6', Icon: BoxIcon },
+  'Carga': { coords: [14.6407, -90.5131], color: '#8b5cf6', Icon: TruckIcon },
+  'En tránsito': { coords: [14.7833, -91.5167], color: '#f59e0b', Icon: TruckIcon },
+  'Retrasado': { coords: [14.5833, -90.5167], color: '#ef4444', Icon: AlertTriangleIcon },
+  'Entregado': { coords: [14.8333, -91.5167], color: '#10b981', Icon: ChecklistIcon }
 }
 
 export default function MapView({ states, P, packages = {} }) {
@@ -51,16 +53,27 @@ export default function MapView({ states, P, packages = {} }) {
       }).addTo(map)
 
       // Popup con información
-      const popupContent = `
-        <div style="text-align: center; min-width: 150px;">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">${location.icon}</div>
-          <strong style="color: ${location.color}; font-size: 1.1rem;">${state}</strong>
-          <div style="margin-top: 0.5rem; font-size: 0.9rem;">
-            Paquetes: <strong id="count-${state}">0</strong>
-          </div>
+      const popupDiv = document.createElement('div')
+      popupDiv.style.cssText = 'text-align: center; min-width: 150px;'
+      popupDiv.innerHTML = `
+        <div id="icon-${state}" style="margin-bottom: 0.5rem; display: flex; justify-content: center;"></div>
+        <strong style="color: ${location.color}; font-size: 1.1rem;">${state}</strong>
+        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+          Paquetes: <strong id="count-${state}">0</strong>
         </div>
       `
-      marker.bindPopup(popupContent)
+      
+      marker.bindPopup(popupDiv)
+      
+      // Renderizar el icono React en el popup cuando se abra
+      marker.on('popupopen', () => {
+        const iconContainer = document.getElementById(`icon-${state}`)
+        if (iconContainer && !iconContainer.hasChildNodes()) {
+          const IconComponent = location.Icon
+          const root = createRoot(iconContainer)
+          root.render(<IconComponent size={32} color={location.color} />)
+        }
+      })
 
       markersRef.current[state] = marker
     })
@@ -157,6 +170,8 @@ export default function MapView({ states, P, packages = {} }) {
           const location = LOCATIONS[state]
           if (!location) return null
           
+          const IconComponent = location.Icon
+          
           return (
             <div 
               key={state}
@@ -179,7 +194,7 @@ export default function MapView({ states, P, packages = {} }) {
                   flexShrink: 0
                 }}
               />
-              <span style={{ fontSize: '1.2rem' }}>{location.icon}</span>
+              <IconComponent size={20} color={location.color} />
               <span style={{ color: 'var(--fg)', fontSize: '0.8rem' }}>{state}</span>
             </div>
           )

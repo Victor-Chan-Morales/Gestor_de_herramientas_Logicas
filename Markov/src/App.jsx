@@ -10,6 +10,7 @@ import MapView from './components/MapView'
 import LiveSimulation from './components/LiveSimulation'
 import PackageTracker from './components/PackageTracker'
 import MetricsDashboard from './components/MetricsDashboard'
+import { MapIcon, ChartIcon } from './components/icons'
 
 export default function App() {
   const [states, setStates] = useState(['Almacén','Carga','En tránsito','Retrasado','Entregado'])
@@ -47,9 +48,9 @@ export default function App() {
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
-          background: 'rgba(251, 191, 36, 0.15)',
+          background: 'rgba(6, 182, 212, 0.15)',
           color: 'var(--accent)',
-          border: '1px solid rgba(251, 191, 36, 0.3)',
+          border: '1px solid rgba(6, 182, 212, 0.3)',
           padding: '10px 18px',
           borderRadius: '8px',
           fontSize: '14px',
@@ -67,9 +68,9 @@ export default function App() {
       <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <div style={{
           display: 'inline-block',
-          background: 'rgba(251, 191, 36, 0.15)',
+          background: 'rgba(6, 182, 212, 0.15)',
           color: 'var(--accent)',
-          border: '1px solid rgba(251, 191, 36, 0.3)',
+          border: '1px solid rgba(6, 182, 212, 0.3)',
           padding: '6px 16px',
           borderRadius: '16px',
           fontSize: '0.75rem',
@@ -86,9 +87,14 @@ export default function App() {
           color: '#ffffff',
           marginBottom: '0.75rem',
           letterSpacing: '-1px',
-          lineHeight: 1.1
+          lineHeight: 1.1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '1rem'
         }}>
-          📦 Cadenas de Markov - Logística
+          <MapIcon size={44} color="var(--accent)" />
+          Cadenas de Markov - Logística
         </h1>
         <p style={{
           fontSize: '1.125rem',
@@ -119,7 +125,8 @@ export default function App() {
             gap: '0.5rem'
           }}
         >
-          🗺️ Modo Visual Interactivo
+          <MapIcon size={20} />
+          Modo Visual Interactivo
         </button>
         <button
           onClick={() => setActiveTab('teorico')}
@@ -132,7 +139,8 @@ export default function App() {
             gap: '0.5rem'
           }}
         >
-          🔢 Modo Teórico/Matemático
+          <ChartIcon size={20} />
+          Modo Teórico/Matemático
         </button>
       </div>
 
