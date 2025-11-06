@@ -143,3 +143,81 @@ a {
 a:hover {
   color: var(--accent-hover) !important;
 }
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(251, 191, 36, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(251, 191, 36, 0.7);
+}
+
+/* Leaflet overrides */
+.leaflet-popup-content-wrapper {
+  background: var(--card) !important;
+  color: var(--fg) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--card) !important;
+}
+
+.leaflet-container {
+  font-family: inherit !important;
+}
+
+/* Animaciones */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Hover effects para las cards de escenario */
+.scenario-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(251, 191, 36, 0.2);
+}
+
+/* Grid responsive mejorado */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+}

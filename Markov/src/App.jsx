@@ -5,6 +5,11 @@ import SimulationPanel from './components/SimulationPanel'
 import GraphView from './components/GraphView'
 import ExportPanel from './components/ExportPanel'
 import Theory from './components/Theory'
+import ScenarioSelector from './components/ScenarioSelector'
+import MapView from './components/MapView'
+import LiveSimulation from './components/LiveSimulation'
+import PackageTracker from './components/PackageTracker'
+import MetricsDashboard from './components/MetricsDashboard'
 
 export default function App() {
   const [states, setStates] = useState(['Almacén','Carga','En tránsito','Retrasado','Entregado'])
@@ -20,6 +25,11 @@ export default function App() {
   const [lastPn, setLastPn] = useState(null)
   const [lastPin, setLastPin] = useState(null)
 
+  // Estados para la simulación en vivo
+  const [livePackages, setLivePackages] = useState([])
+  const [packagesByState, setPackagesByState] = useState({})
+  const [activeTab, setActiveTab] = useState('visual') // 'visual' o 'teorico'
+
   function loadExampleMatrix() {
     setP([
       [0.1,0.8,0,0,0.1],
@@ -31,7 +41,7 @@ export default function App() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-6">
       <div className="mb-6">
         <a href="../../index.html" style={{
           display: 'inline-flex',
@@ -68,7 +78,7 @@ export default function App() {
           textTransform: 'uppercase',
           marginBottom: '1rem'
         }}>
-          Autómatas Probabilísticos
+          Sistema de Tracking de Paquetes
         </div>
         <h1 style={{
           fontSize: '2.75rem',
@@ -78,29 +88,103 @@ export default function App() {
           letterSpacing: '-1px',
           lineHeight: 1.1
         }}>
-          Cadenas de Markov
+          📦 Cadenas de Markov - Logística
         </h1>
         <p style={{
           fontSize: '1.125rem',
           color: 'var(--muted)',
-          maxWidth: '600px',
+          maxWidth: '700px',
           margin: '0 auto'
         }}>
-          Simula y analiza procesos estocásticos mediante matrices de transición probabilística
+          Sistema visual de tracking en tiempo real con simulación probabilística
         </p>
       </header>
-      <StateManager states={states} setStates={setStates} loadExample={loadExampleMatrix} />
-      <TransitionMatrix states={states} P={P} setP={setP} />
-      {/* Pasamos setters para que SimulationPanel actualice resultados globales */}
-      <SimulationPanel states={states} P={P} setLastPn={setLastPn} setLastPin={setLastPin} />
-      <GraphView states={states} P={P} />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-        <ExportPanel P={P} Pn={lastPn} pin={lastPin} states={states} />
-        <div className="card col-span-2">
-          <Theory states={states} />
-        </div>
+      {/* Tabs de navegación */}
+      <div style={{
+        display: 'flex',
+        gap: '1rem',
+        marginBottom: '2rem',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+      }}>
+        <button
+          onClick={() => setActiveTab('visual')}
+          className={activeTab === 'visual' ? 'bg-indigo-600' : 'bg-gray-200'}
+          style={{
+            fontSize: '1rem',
+            padding: '0.75rem 2rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          🗺️ Modo Visual Interactivo
+        </button>
+        <button
+          onClick={() => setActiveTab('teorico')}
+          className={activeTab === 'teorico' ? 'bg-indigo-600' : 'bg-gray-200'}
+          style={{
+            fontSize: '1rem',
+            padding: '0.75rem 2rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          🔢 Modo Teórico/Matemático
+        </button>
       </div>
+
+      {activeTab === 'visual' ? (
+        <>
+          {/* Selector de escenarios */}
+          <ScenarioSelector currentP={P} setP={setP} states={states} />
+
+          {/* Layout de 2 columnas */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <MapView states={states} P={P} packages={packagesByState} />
+            <LiveSimulation 
+              states={states} 
+              P={P} 
+              onPackagesUpdate={(byState) => {
+                setPackagesByState(byState)
+              }}
+              onAllPackagesUpdate={(packages) => {
+                setLivePackages(packages)
+              }}
+            />
+          </div>
+
+          {/* Dashboard de métricas */}
+          <MetricsDashboard packages={livePackages} states={states} P={P} />
+
+          {/* Tracking de paquetes */}
+          <PackageTracker packages={livePackages} states={states} />
+
+          {/* Grafo y teoría */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+            <GraphView states={states} P={P} />
+            <div className="card">
+              <Theory states={states} />
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <StateManager states={states} setStates={setStates} loadExample={loadExampleMatrix} />
+          <TransitionMatrix states={states} P={P} setP={setP} />
+          <SimulationPanel states={states} P={P} setLastPn={setLastPn} setLastPin={setLastPin} />
+          <GraphView states={states} P={P} />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <ExportPanel P={P} Pn={lastPn} pin={lastPin} states={states} />
+            <div className="card col-span-2">
+              <Theory states={states} />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
